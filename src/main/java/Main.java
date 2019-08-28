@@ -1,6 +1,6 @@
 import app.AppUncaughtErrorHandler;
 import app.TelegramApp;
-import app.VkApp;
+import app.vk.VkApp;
 import app.handler.impl.TelegramAppHandler;
 import app.handler.impl.VkAppHandler;
 

@@ -17,6 +17,5 @@ public class TelegramApp extends SocialApp {
     public void launch() {
         appHandler.receive(new Message("hello", null, null, null));
         log.info("Telegram launched in Thread : " + Thread.currentThread().getName());
-//        throw new IndexOutOfBoundsException();
     }
 }
