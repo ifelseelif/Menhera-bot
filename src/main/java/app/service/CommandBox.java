@@ -1,4 +1,4 @@
-package app.commands;
+package app.service;
 
 import annotations.Command;
 import command.NamedCommand;

@@ -1,4 +1,4 @@
-package app.commands;
+package app.service;
 
 import command.NamedCommand;
 import java.util.Optional;
@@ -9,7 +9,7 @@ import java.util.Optional;
  */
 public class CommandManager {
     private static final CommandBox commandBox = new CommandBox();
-    public static NamedCommand getCommamd(String name){
+    public static NamedCommand getCommand(String name){
         Optional<NamedCommand> commandOpt = commandBox.getCommands().stream().filter(c -> c.checkCommand(name)).findFirst();
         return commandOpt.orElse(null);
     }
