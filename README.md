@@ -2,8 +2,8 @@
 Новая версия бота ассистента для студентов ITMO
 <h3 align=center>
 Поддерживаемые социальные сети:<br><br>
-    <a href="https://vk.com/itmo_xcore"><img src="https://image.flaticon.com/icons/svg/906/906377.svg" width=75 height=75/></a>
-    <a href="https://telegram.me/menheraitmoBot"><img src="https://image.flaticon.com/icons/svg/145/145813.svg" width=75 height=75/></a>
+    <a href="https://telegram.me/menheraitmoBot"><img src="https://image.flaticon.com/icons/svg/906/906377.svg" width=75 height=75/></a>
+    <a href="https://vk.com/itmo_xcore"><img src="https://image.flaticon.com/icons/svg/145/145813.svg" width=75 height=75/></a>
 </h3>
 <h3 align=right><img src="https://sun9-33.userapi.com/c848616/v848616126/142d19/wP-FvHTZ9tc.jpg"></h3>
 
