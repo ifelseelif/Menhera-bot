@@ -1,4 +1,8 @@
 vk-app.properties
+telegram-app.properties
+hiberante.cfg.xml
+
 
 ## IDEA CONFIGS
 .idea
+Menhera-bot.iml
