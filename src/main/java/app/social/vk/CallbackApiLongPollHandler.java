@@ -1,4 +1,4 @@
-package app.vk;
+package app.social.vk;
 
 import app.handler.AppHandler;
 import com.vk.api.sdk.callback.longpoll.CallbackApiLongPoll;

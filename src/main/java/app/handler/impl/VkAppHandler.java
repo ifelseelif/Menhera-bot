@@ -2,7 +2,7 @@ package app.handler.impl;
 
 import app.service.CommandManager;
 import app.handler.AppHandler;
-import app.vk.VkApp;
+import app.social.vk.VkApp;
 import com.vk.api.sdk.exceptions.ClientException;
 import model.Message;
 import org.apache.log4j.Logger;

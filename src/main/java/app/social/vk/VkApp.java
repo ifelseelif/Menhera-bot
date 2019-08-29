@@ -1,6 +1,6 @@
-package app.vk;
+package app.social.vk;
 
-import app.SocialApp;
+import app.social.SocialApp;
 import app.handler.AppHandler;
 
 import com.vk.api.sdk.client.TransportClient;
