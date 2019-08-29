@@ -1,5 +1,11 @@
 # Menhera-bot
 Новая версия бота ассистента для студентов ITMO
+<h3 align=center>
+Поддерживаемые социальные сети:<br><br>
+    <img src="https://image.flaticon.com/icons/svg/906/906377.svg" width=75 height=75>
+    <img src="https://image.flaticon.com/icons/svg/145/145813.svg" width=75 height=75>
+</h3>
+<h3 align=right><img src="https://sun9-33.userapi.com/c848616/v848616126/142d19/wP-FvHTZ9tc.jpg"></h3>
 
 В проекте используется [Lombok](https://projectlombok.org/), поэтому не удивляйтесь аннотациям `@Getter`, `@Setter` или `@Data`.
 
