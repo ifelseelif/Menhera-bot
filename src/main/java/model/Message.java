@@ -41,4 +41,8 @@ public class Message {
             return null;
         }
     }
+
+    public static Message getInstance(org.telegram.telegrambots.meta.api.objects.Message tlgrmMessage){
+        return new Message(tlgrmMessage.getText(), tlgrmMessage.getChatId().toString(), null, MessageSourceType.TELEGRAM);
+    }
 }
