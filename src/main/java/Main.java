@@ -1,8 +1,9 @@
 import app.AppUncaughtErrorHandler;
-import app.TelegramApp;
-import app.vk.VkApp;
 import app.handler.impl.TelegramAppHandler;
 import app.handler.impl.VkAppHandler;
+import app.social.telegram.TelegramApp;
+import app.social.vk.VkApp;
+
 
 /**
  * @author Arthur Kupriyanov
