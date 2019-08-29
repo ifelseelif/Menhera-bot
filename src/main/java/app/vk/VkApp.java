@@ -2,15 +2,13 @@ package app.vk;
 
 import app.SocialApp;
 import app.handler.AppHandler;
-import com.vk.api.sdk.callback.longpoll.CallbackApiLongPoll;
+
 import com.vk.api.sdk.client.TransportClient;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
-import com.vk.api.sdk.objects.GroupAuthResponse;
-import model.Message;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -20,12 +18,15 @@ import java.util.Properties;
  * @author Arthur Kupriyanov
  */
 public class VkApp extends SocialApp {
-    private final Logger log = Logger.getLogger(VkApp.class);
-    private VkApiClient vkApiClient;
+    private static final Logger log = Logger.getLogger(VkApp.class);
+    private static VkApiClient vkApiClient;
+    private static GroupActor groupActor;
     private final TransportClient transportClient = new HttpTransportClient();
-    private final String ACCESS_TOKEN;
-    private final int GROUP_ID;
-    {
+    private static final String ACCESS_TOKEN;
+    private static final int GROUP_ID;
+    private static VkMessenger vkMessenger;
+
+    static {
         String groupId = System.getenv("VK_GROUP_ID");
         String accessToken = System.getenv("VK_ACCESS_TOKEN");
         if (groupId == null || accessToken == null ){
@@ -47,7 +48,6 @@ public class VkApp extends SocialApp {
     }
 
 
-
     public VkApp(AppHandler handler) {
         super(handler);
     }
@@ -56,25 +56,31 @@ public class VkApp extends SocialApp {
         log.info("Vkontakte launched in Thread : " + Thread.currentThread().getName());
 
         try {
-            GroupActor actor = init();
+            groupActor = init();
+            vkMessenger = new VkMessenger(groupActor, vkApiClient);
             log.debug("Setting groups longpoll settings...");
-            this.vkApiClient.groupsLongPoll().setLongPollSettings(actor)
-                    .enabled(true)
-                    .messageAllow(true)
-                    .messageNew(true)
-                    .execute();
-            log.debug("Groups longpoll settings setted");
-            CallbackApiLongPoll callbackApiLongPoll = new CallbackApiLongPollHandler(this.vkApiClient, actor, this);
-            log.debug("Running callbackApiLongPoll...");
-            callbackApiLongPoll.run();
+
+            if (!vkApiClient.groups().getLongPollSettings(groupActor).execute().isEnabled()) {
+                log.info("Setting the groups longpoll");
+                vkApiClient.groups().setLongPollSettings(groupActor).enabled(true).messageNew(true).execute();
+            }
+
+            CallbackApiLongPollHandler handler = new CallbackApiLongPollHandler(vkApiClient, groupActor, this);
+            handler.run();
+
         } catch (ClientException | ApiException e) {
             log.error("Could not start vk application",e);
         }
 
     }
 
+    static VkApiClient getVkApiClient(){ return vkApiClient;}
+    public static VkMessenger getVkMessenger(){
+        return vkMessenger;
+    }
     private GroupActor init()  {
-        this.vkApiClient = new VkApiClient(this.transportClient);
+        vkApiClient = new VkApiClient(this.transportClient);
+
         return new GroupActor(GROUP_ID, ACCESS_TOKEN);
     }
 }

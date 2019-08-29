@@ -19,12 +19,14 @@ public class CallbackApiLongPollHandler extends CallbackApiLongPoll {
 
     @Override
     public void messageNew(Integer groupId, Message message) {
-        System.out.println(message);
+        if (message != null && !message.isOut())
+            handler.receive(model.Message.getInstance(message));
         //handler.receive(new model.Message(message.getText(), "" + message.getFromId(), "" + message.getPeerId(), MessageSourceType.VK));
     }
 
     @Override
     public void messageNew(Integer groupId, String secret, Message message) {
-        System.out.println(message);
+        if (message != null && !message.isOut())
+        handler.receive(model.Message.getInstance(message));
     }
 }

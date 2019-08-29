@@ -31,4 +31,14 @@ public class Message {
     public void toLowerCase(){
         if (this.message != null) this.message = this.message.toLowerCase();
     }
+
+    public static Message getInstance(com.vk.api.sdk.objects.messages.Message vkMessage) {
+        try {
+            return new Message(vkMessage.getBody(), vkMessage.getUserId().toString(), null, MessageSourceType.VK);
+
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
