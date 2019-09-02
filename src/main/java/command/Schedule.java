@@ -1,9 +1,11 @@
 package command;
 
 import annotations.Command;
+import command.util.ScheduleParser;
 import lombok.ToString;
 import model.Message;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,11 +33,15 @@ public class Schedule extends NamedCommand {
         Config config = getConfig(groupAndConfig);
 
         // TODO: Write schedule parser
-        System.out.println(config);
         return getSchedule(config);
     }
 
     private Message getSchedule(Config config) {
+        try {
+            System.out.println(ScheduleParser.parseSchedule(config.group, config.day));
+        } catch (IOException e) {
+            System.out.println("Не удалось получить расписание");
+        }
         return null;
     }
 
@@ -76,7 +82,7 @@ public class Schedule extends NamedCommand {
         final Day day;
     }
 
-    private enum Day {
+    public enum Day {
         TOMORROW, DAY_AFTER_TOMORROW, WEEK, TODAY
     }
 }
