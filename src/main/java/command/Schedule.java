@@ -1,9 +1,11 @@
 package command;
 
 import annotations.Command;
+import command.util.ScheduleParser;
 import lombok.ToString;
 import model.Message;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +20,7 @@ public class Schedule extends NamedCommand {
     }
 
     @Override
-        public Message execute(Message message) {
+    public Message execute(Message message) {
         message.toLowerCase();
         message.setMessage(message.getMessage().replace(" ",""));
         Pattern pattern = Pattern.compile("расписание(у*группы)*.+");
@@ -30,11 +32,8 @@ public class Schedule extends NamedCommand {
 
         Config config = getConfig(groupAndConfig);
 
-        // TODO: Write schedule parser
-        System.out.println(config);
-        Message msg = getSchedule(config);
-        msg.setTo(message.getFrom());
-        return msg;
+
+        return getSchedule(config);
     }
 
     private Message getSchedule(Config config) {
@@ -78,7 +77,7 @@ public class Schedule extends NamedCommand {
         final Day day;
     }
 
-    private enum Day {
+    public enum Day {
         TOMORROW, DAY_AFTER_TOMORROW, WEEK, TODAY
     }
 }
