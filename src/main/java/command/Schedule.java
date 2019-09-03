@@ -20,7 +20,7 @@ public class Schedule extends NamedCommand {
     }
 
     @Override
-        public Message execute(Message message) {
+    public Message execute(Message message) {
         message.toLowerCase();
         message.setMessage(message.getMessage().replace(" ",""));
         Pattern pattern = Pattern.compile("расписание(у*группы)*.+");
@@ -48,11 +48,6 @@ public class Schedule extends NamedCommand {
         Message msg = getSchedule(config);
         msg.setTo(message.getFrom());
         return msg;
-    }
-
-    private Message getSchedule(Config config) {
-        return new Message(config.toString(), null, null , null);
-
     }
 
     private Config getConfig(String context){
