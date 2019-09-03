@@ -1,5 +1,6 @@
-package app;
+package app.social;
 
+import app.App;
 import app.handler.AppHandler;
 
 /**

@@ -1,6 +1,10 @@
 package app.service;
 
+import command.Command;
 import command.NamedCommand;
+import model.Message;
+import model.MessageSourceType;
+
 import java.util.Optional;
 
 
@@ -9,8 +13,8 @@ import java.util.Optional;
  */
 public class CommandManager {
     private static final CommandBox commandBox = new CommandBox();
-    public static NamedCommand getCommand(String name){
+    public static Command getCommand(String name){
         Optional<NamedCommand> commandOpt = commandBox.getCommands().stream().filter(c -> c.checkCommand(name)).findFirst();
-        return commandOpt.orElse(null);
+        return commandOpt.isPresent()?commandOpt.get(): m -> new Message("Не понимаю вашей команды", m.getFrom(), null, MessageSourceType.VK);
     }
 }

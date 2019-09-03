@@ -23,10 +23,10 @@ public abstract class NamedCommand implements Command {
         List<String> arr = new ArrayList<>();
         arr.add(getName());
         return arr;
-    };
+    }
 
     public boolean checkCommand(String command){
-        if (!ignoreCase) return command.equals(getName()) || getAliases().contains(command);
-        else return command.toLowerCase().equals(getName().toLowerCase()) || getAliases().stream().map(String::toLowerCase).collect(Collectors.toList()).contains(command.toLowerCase());
+        if (!ignoreCase) return command.equals(getName()) || command.split(" ")[0].equals(getName()) || getAliases().contains(command);
+        else return command.toLowerCase().equals(getName().toLowerCase()) || command.toLowerCase().split(" ")[0].equals(getName()) || getAliases().stream().map(String::toLowerCase).collect(Collectors.toList()).contains(command.toLowerCase());
     }
 }

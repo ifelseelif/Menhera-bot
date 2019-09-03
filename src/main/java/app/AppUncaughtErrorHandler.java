@@ -14,7 +14,7 @@ public class AppUncaughtErrorHandler implements Thread.UncaughtExceptionHandler 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         Logger logger = Logger.getLogger(app);
-        logger.error(e.getMessage()==null?"No message found":e.getMessage());
-        e.printStackTrace();
+        logger.error(e.getMessage()==null?"No exception message found":e.getMessage());
+        logger.error(e);
     }
 }

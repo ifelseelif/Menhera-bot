@@ -27,10 +27,10 @@ class CommandBox {
         log.info("SEARCH ANNOTATED COMMANDS ...");
 
         for (BeanDefinition bd : scanner.findCandidateComponents("command")) {
-            log.info("Found annotated command : " + bd.getBeanClassName());
+            log.info("Found annotated command : [" + bd.getBeanClassName() + "]");
             try {
                 commands.add((NamedCommand) Class.forName(bd.getBeanClassName()).getConstructor().newInstance());
-                log.info(bd.getBeanClassName() + " added to CommandBox");
+                log.info("[" + bd.getBeanClassName() + "] added to CommandBox");
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                 log.error(e.getMessage(), e);
             } catch (InstantiationException e) {

@@ -32,7 +32,7 @@ public class Schedule extends NamedCommand {
 
         Config config = getConfig(groupAndConfig);
 
-        // TODO: Write schedule parser
+
         return getSchedule(config);
     }
 
@@ -43,6 +43,16 @@ public class Schedule extends NamedCommand {
             System.out.println("Не удалось получить расписание");
         }
         return null;
+
+        System.out.println(config);
+        Message msg = getSchedule(config);
+        msg.setTo(message.getFrom());
+        return msg;
+    }
+
+    private Message getSchedule(Config config) {
+        return new Message(config.toString(), null, null , null);
+
     }
 
     private Config getConfig(String context){
@@ -51,8 +61,8 @@ public class Schedule extends NamedCommand {
 
         Day day;
         if (m.find()){
-            if (m.group().contains("завтра")) day = Day.TOMORROW;
-            else if (m.group().contains("послезавтра")) day = Day.DAY_AFTER_TOMORROW;
+            if (m.group().contains("послезавтра")) day = Day.DAY_AFTER_TOMORROW;
+            else if (m.group().contains("завтра")) day = Day.TOMORROW;
             else if (m.group().contains("нанеделю")) day = Day.WEEK;
             else day = Day.TODAY;
         } else {
