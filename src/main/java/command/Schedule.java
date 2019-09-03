@@ -45,7 +45,7 @@ public class Schedule extends NamedCommand {
         String schedule = null;
         try {
 
-            log.info("Получено расписание" + (schedule = ScheduleParser.parseSchedule(config.group, config.day)));
+            log.info("Получено расписание " + (schedule = ScheduleParser.parseSchedule(config.group, config.day)));
         } catch (IOException e) {
             log.error("Не удалось получить расписание", e);
         }
@@ -56,20 +56,39 @@ public class Schedule extends NamedCommand {
 
 
     private Config getConfig(String context){
+
+        return new Config(getGroup(context), getDay(context), getParity(context));
+    }
+
+    private Week getParity(String context){
+
+        Pattern pattern = Pattern.compile("(четн.+)|(нечетн.+)");
+        Matcher m = pattern.matcher(context);
+
+        if (m.find()){
+            if (m.group().matches("четн.+")){
+                return Week.PARITY;
+            } else {
+                return Week.NOT_PARITY;
+            }
+        } else {
+            return Week.NOT_STATED;
+        }
+
+    }
+
+    private Day getDay(String context){
         Pattern pattern = Pattern.compile("(((на)*завтра)|((на)*послезавтра)|(нанеделю))+");
         Matcher m = pattern.matcher(context);
 
-        Day day;
         if (m.find()){
-            if (m.group().contains("послезавтра")) day = Day.DAY_AFTER_TOMORROW;
-            else if (m.group().contains("завтра")) day = Day.TOMORROW;
-            else if (m.group().contains("нанеделю")) day = Day.WEEK;
-            else day = Day.TODAY;
+            if (m.group().contains("послезавтра")) return Day.DAY_AFTER_TOMORROW;
+            else if (m.group().contains("завтра")) return Day.TOMORROW;
+            else if (m.group().contains("нанеделю")) return Day.WEEK;
+            else return Day.TODAY;
         } else {
-            day = Day.TODAY;
+            return Day.NOT_STATED;
         }
-
-        return new Config(getGroup(context), day);
     }
 
     private String getGroup(String context){
@@ -85,15 +104,23 @@ public class Schedule extends NamedCommand {
     @ToString
     private final class Config{
         Config(String group, Day day){
-            this.group = group; this.day = day;
+            this.group = group; this.day = day; this.week = Week.NOT_STATED;
+        }
+        Config(String group, Day day, Week week){
+            this.group = group; this.day = day; this.week = week;
         }
 
-        final String group;
-        final Day day;
+        public final String group;
+        public final Day day;
+        public final Week week;
     }
 
     public enum Day {
-        TOMORROW, DAY_AFTER_TOMORROW, WEEK, TODAY
+        TOMORROW, DAY_AFTER_TOMORROW, WEEK, TODAY, NOT_STATED;
+    }
+
+    public enum Week {
+        PARITY, NOT_PARITY, NOT_STATED;
     }
 }
 
