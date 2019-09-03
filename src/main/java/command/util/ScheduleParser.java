@@ -2,6 +2,7 @@ package command.util;
 
 import command.Schedule;
 
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,7 +15,7 @@ import java.util.GregorianCalendar;
  * @author Kolokolov Artyom
  */
 public class ScheduleParser {
-
+    private static final Logger log = Logger.getLogger(ScheduleParser.class);
     private static final String BASE_URL = "http://www.ifmo.ru/ru/schedule/0/%s/raspisanie_zanyatiy_%s.htm";
     private static final String[] days =
             {"7day", "1day", "2day", "3day", "4day", "5day", "6day"};
@@ -62,6 +63,7 @@ public class ScheduleParser {
 
     private static void parseDay(String day) throws IOException {
         Element element = doc.getElementById(day);
+
         if (element == null) {
             throw new IOException("smth");
         }
