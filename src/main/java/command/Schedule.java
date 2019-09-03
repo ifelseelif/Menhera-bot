@@ -4,6 +4,7 @@ import annotations.Command;
 import command.util.ScheduleParser;
 import lombok.ToString;
 import model.Message;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -11,9 +12,13 @@ import java.util.regex.Pattern;
 
 /**
  * @author Arthur Kupriyanov
+ * @author Kolokolov Artyom
  */
 @Command
 public class Schedule extends NamedCommand {
+
+    private final Logger log = Logger.getLogger(Schedule.class);
+
     @Override
     public String getName() {
         return "расписание";
@@ -33,12 +38,22 @@ public class Schedule extends NamedCommand {
         Config config = getConfig(groupAndConfig);
 
 
-        return getSchedule(config);
+        return getSchedule(config, message);
     }
 
-    private Message getSchedule(Config config) {
-        return new Message(config.toString(), null, null , null);
+    private Message getSchedule(Config config, Message message) {
+        String schedule = null;
+        try {
+
+            log.info("Получено расписание" + (schedule = ScheduleParser.parseSchedule(config.group, config.day)));
+        } catch (IOException e) {
+            log.error("Не удалось получить расписание", e);
+        }
+        Message callbackMsg = Message.reverseMessage(message);
+        callbackMsg.setMessage(schedule);
+        return callbackMsg;
     }
+
 
     private Config getConfig(String context){
         Pattern pattern = Pattern.compile("(((на)*завтра)|((на)*послезавтра)|(нанеделю))+");

@@ -34,16 +34,12 @@
             <version>1.2.17</version>
         </dependency>
 
-
         <!-- https://mvnrepository.com/artifact/com.jcabi/jcabi-log -->
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-log</artifactId>
             <version>0.18</version>
         </dependency>
-
-
-
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
@@ -59,6 +55,7 @@
             <version>5.3.2</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -77,6 +74,7 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.5</version>
         </dependency>
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>

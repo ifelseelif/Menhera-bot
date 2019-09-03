@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * @author Kolokolov Artyom
+ */
 public class ScheduleParser {
 
     private static final String BASE_URL = "http://www.ifmo.ru/ru/schedule/0/%s/raspisanie_zanyatiy_%s.htm";
@@ -20,6 +23,7 @@ public class ScheduleParser {
     private static String result;
 
     public static String parseSchedule(String group, Schedule.Day day) throws IOException {
+
         doc = Jsoup.connect(String.format(BASE_URL, group, group)).get();
         switch (day) {
             case TODAY:
@@ -36,18 +40,21 @@ public class ScheduleParser {
                 break;
             case WEEK:
                 result = "Расписание на неделю \n";
+
+                StringBuilder sbResult = new StringBuilder();
                 for (int i = 0; i < 7; i++) {
                     String curDay = getDay(i);
-                    if (curDay == "7day" && i != 0) {
+                    if (curDay.equals("7day") && i != 0) {
                         break;
                     } else {
                         try {
                             parseDay(curDay);
-                        } catch (IOException e) {
+                        } catch (IOException ignored) {
                         }
                     }
-                    result += "\n\n";
+                    sbResult.append("\n\n");
                 }
+                result = sbResult.toString();
                 break;
         }
         return result;
@@ -59,13 +66,11 @@ public class ScheduleParser {
             throw new IOException("smth");
         }
         Elements elements = element.select("tr");
+        StringBuilder sb = new StringBuilder();
         for (Element e : elements) {
-            result +=
-                    e.select(".time").select("span").text() +
-                            e.select(".room").text() +
-                            e.select(".lesson").text() +
-                            "\n";
+            sb.append(e.select(".time").select("span").text()).append(e.select(".room").text()).append(e.select(".lesson").text()).append("\n");
         }
+        result = sb.toString();
     }
 
     private static String getDay(int difDay) {
