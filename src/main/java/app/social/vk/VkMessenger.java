@@ -1,5 +1,6 @@
 package app.social.vk;
 
+import app.social.MessageSender;
 import com.vk.api.sdk.client.ClientResponse;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
@@ -10,7 +11,7 @@ import model.Message;
  * @author Arthur Kupriyanov
  */
 
-public class VkMessenger {
+public class VkMessenger implements MessageSender {
     private GroupActor groupActor;
     private VkApiClient vkApiClient;
     public VkMessenger(GroupActor groupActor, VkApiClient vkApiClient){
