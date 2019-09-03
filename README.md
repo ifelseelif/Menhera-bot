@@ -1,6 +1,7 @@
 # Menhera-bot
 Новая версия бота ассистента для студентов ITMO
 <h3 align=center>
+    <img src="https://travis-ci.org/AppLoidx/Menhera-bot.svg?branch=master" /><br>
 Поддерживаемые социальные сети:<br><br>
     <a href="https://telegram.me/menheraitmoBot"><img src="https://image.flaticon.com/icons/svg/906/906377.svg" width=75 height=75/></a>
     <a href="https://vk.com/itmo_xcore"><img src="https://image.flaticon.com/icons/svg/145/145813.svg" width=75 height=75/></a>
