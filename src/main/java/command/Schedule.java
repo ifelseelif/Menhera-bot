@@ -37,17 +37,7 @@ public class Schedule extends NamedCommand {
     }
 
     private Message getSchedule(Config config) {
-        try {
-            System.out.println(ScheduleParser.parseSchedule(config.group, config.day));
-        } catch (IOException e) {
-            System.out.println("Не удалось получить расписание");
-        }
-        return null;
-
-        System.out.println(config);
-        Message msg = getSchedule(config);
-        msg.setTo(message.getFrom());
-        return msg;
+        return new Message(config.toString(), null, null , null);
     }
 
     private Config getConfig(String context){
