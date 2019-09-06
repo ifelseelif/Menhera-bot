@@ -1,5 +1,8 @@
 # Menhera-bot
 Новая версия бота ассистента для студентов ITMO
+
+Trello: https://trello.com/b/fyHcdJge/menhera-bot
+
 <h3 align=center>
     <img src="https://travis-ci.org/AppLoidx/Menhera-bot.svg?branch=master" /><br>
 Поддерживаемые социальные сети:<br><br>
