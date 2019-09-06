@@ -27,11 +27,11 @@ public class Schedule extends NamedCommand {
     @Override
     public Message execute(Message message) {
         message.toLowerCase();
-        message.setMessage(message.getMessage().replace(" ",""));
+        message.setMessage(message.getMessage().replace(" ", ""));
         Pattern pattern = Pattern.compile("расписание(у*группы)*.+");
         Matcher m = pattern.matcher(message.getMessage());
         String groupAndConfig = "";
-        if (m.find()){
+        if (m.find()) {
             groupAndConfig = message.getMessage().replaceAll("расписание(у*группы)*", "");
         }
 
@@ -55,18 +55,18 @@ public class Schedule extends NamedCommand {
     }
 
 
-    private Config getConfig(String context){
+    private Config getConfig(String context) {
 
         return new Config(getGroup(context), getDay(context), getParity(context));
     }
 
-    private Week getParity(String context){
+    private Week getParity(String context) {
 
         Pattern pattern = Pattern.compile("(четн.+)|(нечетн.+)");
         Matcher m = pattern.matcher(context);
 
-        if (m.find()){
-            if (m.group().matches("четн.+")){
+        if (m.find()) {
+            if (m.group().matches("четн.+")) {
                 return Week.PARITY;
             } else {
                 return Week.NOT_PARITY;
@@ -77,11 +77,11 @@ public class Schedule extends NamedCommand {
 
     }
 
-    private Day getDay(String context){
+    private Day getDay(String context) {
         Pattern pattern = Pattern.compile("(((на)*завтра)|((на)*послезавтра)|(нанеделю))+");
         Matcher m = pattern.matcher(context);
 
-        if (m.find()){
+        if (m.find()) {
             if (m.group().contains("послезавтра")) return Day.DAY_AFTER_TOMORROW;
             else if (m.group().contains("завтра")) return Day.TOMORROW;
             else if (m.group().contains("нанеделю")) return Day.WEEK;
@@ -91,10 +91,10 @@ public class Schedule extends NamedCommand {
         }
     }
 
-    private String getGroup(String context){
+    private String getGroup(String context) {
         Pattern pattern = Pattern.compile(".+[0-9]+");
         Matcher m = pattern.matcher(context);
-        if (m.find()){
+        if (m.find()) {
             return m.group();
         } else {
             return null;
@@ -102,12 +102,17 @@ public class Schedule extends NamedCommand {
     }
 
     @ToString
-    private final class Config{
-        Config(String group, Day day){
-            this.group = group; this.day = day; this.week = Week.NOT_STATED;
+    private final class Config {
+        Config(String group, Day day) {
+            this.group = group;
+            this.day = day;
+            this.week = Week.NOT_STATED;
         }
-        Config(String group, Day day, Week week){
-            this.group = group; this.day = day; this.week = week;
+
+        Config(String group, Day day, Week week) {
+            this.group = group;
+            this.day = day;
+            this.week = week;
         }
 
         public final String group;
@@ -116,11 +121,19 @@ public class Schedule extends NamedCommand {
     }
 
     public enum Day {
-        TOMORROW, DAY_AFTER_TOMORROW, WEEK, TODAY, NOT_STATED;
+        TOMORROW, DAY_AFTER_TOMORROW, WEEK, TODAY, NOT_STATED
     }
 
     public enum Week {
-        PARITY, NOT_PARITY, NOT_STATED;
+        PARITY, NOT_PARITY, NOT_STATED
+    }
+
+    private class Pair {
+        private String name;
+        private String time;
+        private String location;
+        private String teacher;
+        private String lecturRoom;
     }
 }
 
