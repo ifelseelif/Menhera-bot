@@ -1,5 +1,8 @@
 # Menhera-bot
 Новая версия бота ассистента для студентов ITMO
+
+Trello: https://trello.com/b/fyHcdJge/menhera-bot
+
 <h3 align=center>
     <img src="https://travis-ci.org/AppLoidx/Menhera-bot.svg?branch=master" /><br>
 Поддерживаемые социальные сети:<br><br>
@@ -52,3 +55,18 @@ public class Bye extends NamedCommand{
 
   * Этот метод получает в качестве аргумента объект `Message`. 
 Вернуть можно либо объект `Message`, который выполнится (отправится к тому, кто указан в поле `to`) или `null` (ничего не произойдет)
+
+## Message
+`Message` - это объект для пересылки данных между разными методами. Например, структура сообщений VK отличается от структуры Telegram, поэтому был создан общий объект.
+
+**Message имеет 4 параметра**:
+* `message` - сообщение которое он хранит
+* `to` - адресат (vk id или telegram nickname)
+* `from` - идентификатор отправителя (vk id или telegram nickname)
+* `sourceType` - источник сообщения VK или Telegram
+
+В последствии его можно передавать реализациям интерфейса `MessageSender`, который отправит сообщение, либо возвращать в методе `execute` у `@Command` класса.
+
+Также `Message` содержит несоклько методов для работы:
+* `.reverseMessage(Message)` - статический метод, который возвращает объект `Message` с ротированными `to` и `from` (меняет значения местами)
+* `toLowerCase()` - переносит в нижний регистр текст сообщения (`deprecated`)
