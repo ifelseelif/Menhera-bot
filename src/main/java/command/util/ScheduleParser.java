@@ -17,15 +17,19 @@ import java.util.GregorianCalendar;
 public class ScheduleParser {
     private static final Logger log = Logger.getLogger(ScheduleParser.class);
     private static final String BASE_URL = "http://www.ifmo.ru/ru/schedule/0/%s/raspisanie_zanyatiy_%s.htm";
+    private static final String URL = "http://www.ifmo.ru/ru/schedule/0/%s/%s/raspisanie_zanyatiy_%s.htm";
     private static final String[] days =
             {"7day", "1day", "2day", "3day", "4day", "5day", "6day"};
     private static GregorianCalendar calendar = new GregorianCalendar();
     private static Document doc;
     private static String result;
+    private static int parityOfWeek;
 
     public static String parseSchedule(String group, Schedule.Day day) throws IOException {
 
         doc = Jsoup.connect(String.format(BASE_URL, group, group)).get();
+        parityOfWeek = getParityOfWeek();
+        doc = Jsoup.connect(String.format(URL, group, parityOfWeek, group)).get();
         switch (day) {
             case TODAY:
                 result = "Расписание на сегодня \n";
@@ -50,7 +54,9 @@ public class ScheduleParser {
                     } else {
                         try {
                             parseDay(curDay);
+                            sbResult.append(result);
                         } catch (IOException ignored) {
+
                         }
                     }
                     sbResult.append("\n\n");
@@ -73,6 +79,14 @@ public class ScheduleParser {
             sb.append(e.select(".time").select("span").text()).append(e.select(".room").text()).append(e.select(".lesson").text()).append("\n");
         }
         result = sb.toString();
+    }
+
+    private static int getParityOfWeek(){
+        if(doc.getElementsByClass("schedule-week").select("span").text().contains("Нечетная")){
+            return 2;
+        } else {
+            return 1;
+        }
     }
 
     private static String getDay(int difDay) {
